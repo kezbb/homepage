@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIHub - AI API分发平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #00d2ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --success: #10b981;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark), #1e293b);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero 区域 */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(106, 17, 203, 0.1) 0%, rgba(37, 117, 252, 0.05) 40%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 30px;
+        }
+        
+        .logo i {
+            color: var(--accent);
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: var(--gray);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        
+        .btn-outline:hover {
+            background: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 117, 252, 0.3);
+        }
+        
+        /* 特性部分 */
+        .features {
+            padding: 80px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 210, 255, 0.3);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 30px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+        }
+        
+        /* API 文档部分 */
+        .api-docs {
+            padding: 80px 0;
+            background: rgba(15, 23, 42, 0.7);
+        }
+        
+        .docs-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .docs-content {
+            flex: 1;
+        }
+        
+        .docs-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .docs-content p {
+            margin-bottom: 30px;
+            color: var(--gray);
+        }
+        
+        .code-sample {
+            flex: 1;
+            background: #1e293b;
+            border-radius: 15px;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.8;
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+        
+        .code-block {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+        
+        .code-keyword {
+            color: #ff79c6;
+        }
+        
+        .code-function {
+            color: #50fa7b;
+        }
+        
+        .code-string {
+            color: #f1fa8c;
+        }
+        
+        .code-comment {
+            color: #6272a4;
+        }
+        
+        .code-number {
+            color: #bd93f9;
+        }
+        
+        /* 定价部分 */
+        .pricing {
+            padding: 80px 0;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .pricing-card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .pricing-card.popular {
+            transform: scale(1.05);
+            border: 2px solid var(--accent);
+            position: relative;
+        }
+        
+        .popular-tag {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--dark);
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            color: var(--gray);
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-features li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        .pricing-features li .fa-times {
+            color: #ef4444;
+        }
+        
+        /* AI 元素装饰 */
+        .ai-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .ai-element {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.2) 0%, transparent 70%);
+        }
+        
+        .element-1 {
+            width: 400px;
+            height: 400px;
+            top: 10%;
+            left: 10%;
+            animation: float 12s ease-in-out infinite;
+        }
+        
+        .element-2 {
+            width: 300px;
+            height: 300px;
+            bottom: 20%;
+            right: 15%;
+            animation: float 15s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+        
+        .element-3 {
+            width: 200px;
+            height: 200px;
+            top: 40%;
+            right: 25%;
+            animation: float 10s ease-in-out infinite;
+            animation-delay: 4s;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 70px 0 30px;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            position: relative;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-col ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(148, 163, 184, 0.1);
+            border-radius: 50%;
+            color: var(--light);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            color: var(--gray);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .docs-container {
+                flex-direction: column;
+            }
+            
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* 动画 */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px);
+            }
+            50% {
+                transform: translateY(10px) translateX(-15px);
+            }
+            75% {
+                transform: translateY(-15px) translateX(-10px);
+            }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- AI 背景元素 -->
+    <div class="ai-elements">
+        <div class="ai-element element-1"></div>
+        <div class="ai-element element-2"></div>
+        <div class="ai-element element-3"></div>
+    </div>
+    
+    <!-- Hero 区域 -->
+    <section class="hero">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <span>AIHub</span>
+            </div>
+            
+            <h1>强大的人工智能API分发平台</h1>
+            <p>集成最先进的AI模型到您的应用程序中，通过简单易用的API接口</p>
+            
+            <div class="hero-buttons">
+                <button class="btn btn-primary">开始免费试用</button>
+                <button class="btn btn-outline">查看文档</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特性部分 -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>我们的核心功能</h2>
+                <p>我们提供全方位的AI能力，让您的应用更智能</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card floating">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>自然语言处理</h3>
+                    <p>文本生成、情感分析、内容摘要、语言翻译等高级NLP功能，让您的应用理解人类语言。</p>
+                </div>
+                
+                <div class="feature-card floating" style="animation-delay: 0.5s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>计算机视觉</h3>
+                    <p>图像识别、物体检测、人脸分析、图像生成等CV能力，为您的应用添加视觉智能。</p>
+                </div>
+                
+                <div class="feature-card floating" style="animation-delay: 1s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>语音识别与合成</h3>
+                    <p>语音转文字、文字转语音、语音翻译等功能，让您的应用能够听和说。</p>
+                </div>
+                
+                <div class="feature-card floating" style="animation-delay: 1.5s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>预测分析</h3>
+                    <p>利用机器学习模型进行数据预测、趋势分析和决策支持，挖掘数据价值。</p>
+                </div>
+                
+                <div class="feature-card floating" style="animation-delay: 2s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>企业级安全</h3>
+                    <p>端到端加密、权限控制、审计日志，确保您的数据和模型安全无忧。</p>
+                </div>
+                
+                <div class="feature-card floating" style="animation-delay: 2.5s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>高性能API</h3>
+                    <p>低延迟、高并发的API服务，全球CDN加速，99.9%的服务可用性保证。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API 文档部分 -->
+    <section class="api-docs">
+        <div class="container">
+            <div class="docs-container">
+                <div class="docs-content">
+                    <h2>简单易用的API集成</h2>
+                    <p>无论您使用哪种编程语言，只需几行代码即可集成AI能力到您的应用中。我们提供完善的文档和代码示例，让集成过程变得简单快捷。</p>
+                    <p>支持RESTful API和WebSocket协议，满足不同场景的需求。所有API都有详细的参数说明和返回示例。</p>
+                    <button class="btn btn-primary">查看完整文档</button>
+                </div>
+                
+                <div class="code-sample">
+                    <div class="code-header">
+                        <span>Python 示例</span>
+                        <span><i class="fab fa-python"></i></span>
+                    </div>
+                    <div class="code-block">
+                        <pre><span class="code-keyword">import</span> requests
+
+<span class="code-comment"># 设置API密钥和端点</span>
+API_KEY = <span class="code-string">"your_api_key_here"</span>
+ENDPOINT = <span class="code-string">"https://api.aihub.com/v1/chat/completions"</span>
+
+<span class="code-comment"># 准备请求数据</span>
+headers = {
+    <span class="code-string">"Authorization"</span>: <span class="code-string">f"Bearer {API_KEY}"</span>,
+    <span class="code-string">"Content-Type"</span>: <span class="code-string">"application/json"</span>
+}
+
+data = {
+    <span class="code-string">"model"</span>: <span class="code-string">"gpt-4-turbo"</span>,
+    <span class="code-string">"messages"</span>: [
+        {<span class="code-string">"role"</span>: <span class="code-string">"user"</span>, <span class="code-string">"content"</span>: <span class="code-string">"你好，请介绍一下AIHub平台"</span>}
+    ],
+    <span class="code-string">"max_tokens"</span>: <span class="code-number">500</span>
+}
+
+<span class="code-comment"># 发送请求并获取响应</span>
+response = requests.post(ENDPOINT, headers=headers, json=data)
+result = response.json()
+
+<span class="code-comment"># 打印AI的回复</span>
+<span class="code-keyword">print</span>(result[<span class="code-string">'choices'</span>][0][<span class="code-string">'message'</span>][<span class="code-string">'content'</span>])</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 定价部分 -->
+    <section class="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>灵活的定价计划</h2>
+                <p>选择适合您需求的计划，按需付费，无隐藏费用</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card floating">
+                    <h3>开发者版</h3>
+                    <div class="price">$0<span>/月</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 每月1,000次API调用</li>
+                        <li><i class="fas fa-check"></i> 基础AI模型访问</li>
+                        <li><i class="fas fa-check"></i> 社区支持</li>
+                        <li><i class="fas fa-times"></i> 高级模型</li>
+                        <li><i class="fas fa-times"></i> 优先技术支持</li>
+                        <li><i class="fas fa-times"></i> 自定义模型</li>
+                    </ul>
+                    <button class="btn btn-outline">免费开始</button>
+                </div>
+                
+                <div class="pricing-card popular floating" style="animation-delay: 0.3s;">
+                    <div class="popular-tag">最受欢迎</div>
+                    <h3>专业版</h3>
+                    <div class="price">$99<span>/月</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 每月100,000次API调用</li>
+                        <li><i class="fas fa-check"></i> 所有AI模型访问</li>
+                        <li><i class="fas fa-check"></i> 优先技术支持</li>
+                        <li><i class="fas fa-check"></i> 高级模型（GPT-4等）</li>
+                        <li><i class="fas fa-check"></i> 专属API端点</li>
+                        <li><i class="fas fa-times"></i> 自定义模型</li>
+                    </ul>
+                    <button class="btn btn-primary">立即升级</button>
+                </div>
+                
+                <div class="pricing-card floating" style="animation-delay: 0.6s;">
+                    <h3>企业版</h3>
+                    <div class="price">定制<span></span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 无限API调用</li>
+                        <li><i class="fas fa-check"></i> 所有AI模型访问</li>
+                        <li><i class="fas fa-check"></i> 24/7专属技术支持</li>
+                        <li><i class="fas fa-check"></i> 高级模型（GPT-4等）</li>
+                        <li><i class="fas fa-check"></i> 专属API端点</li>
+                        <li><i class="fas fa-check"></i> 自定义模型训练</li>
+                    </ul>
+                    <button class="btn btn-outline">联系我们</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="justify-content: flex-start;">
+                        <i class="fas fa-brain"></i>
+                        <span>AIHub</span>
+                    </div>
+                    <p>提供最先进的AI API服务，赋能开发者和企业构建智能应用。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>产品</h4>
+                    <ul>
+                        <li><a href="#">自然语言处理</a></li>
+                        <li><a href="#">计算机视觉</a></li>
+                        <li><a href="#">语音技术</a></li>
+                        <li><a href="#">预测分析</a></li>
+                        <li><a href="#">企业解决方案</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>资源</h4>
+                    <ul>
+                        <li><a href="#">文档中心</a></li>
+                        <li><a href="#">API参考</a></li>
+                        <li><a href="#">教程</a></li>
+                        <li><a href="#">博客</a></li>
+                        <li><a href="#">状态页面</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>公司</h4>
+                    <ul>
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">加入我们</a></li>
+                        <li><a href="#">客户案例</a></li>
+                        <li><a href="#">联系我们</a></li>
+                        <li><a href="#">服务条款</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 AIHub. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 卡片悬停效果增强
+        const cards = document.querySelectorAll('.feature-card, .pricing-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = 'transform 0.3s, box-shadow 0.3s, border-color 0.3s';
+            });
+        });
+        
+        // 添加浮动效果到所有浮动元素
+        const floatingElements = document.querySelectorAll('.floating');
+        floatingElements.forEach((el, index) => {
+            el.style.animationDelay = `${index * 0.2}s`;
+        });
+    </script>
+</body>
+</html>
